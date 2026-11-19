@@ -1,0 +1,17 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const html=fs.readFileSync('index.html','utf8');
+const css=fs.readFileSync('styles.css','utf8');
+const js=fs.readFileSync('game.js','utf8');
+const ids=new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]));
+const refs=[...js.matchAll(/\$\('([^']+)'\)/g)].map(m=>m[1]);
+const missing=[...new Set(refs)].filter(id=>!ids.has(id));
+assert.deepEqual(missing,[], 'Every referenced DOM ID must exist in the HTML');
+assert.match(html,/type="module" src="\.\/game\.js"/);
+assert.match(html,/three@0\.187\.0/);
+assert.match(css,/\.mobile-controls/);
+for(const mission of ['GHOST DELIVERY','SILENT TRANSFER','ACCOUNT ECHO'])assert.ok(js.includes(mission),mission);
+for(const feature of ['function animate','function createCoins','function completeCase','function showBoard','function updateHUD','function collision','function makeEnvironment'])assert.ok(js.includes(feature),feature);
+assert.match(js,/localStorage\.setItem/);
+assert.match(js,/Math\.max\(0,xp-\(previous\?\.xp\|\|0\)\)/);
+console.log('Static smoke checks passed: DOM selectors, pinned 3D library, missions, coins, local rewards and leaderboard.');
