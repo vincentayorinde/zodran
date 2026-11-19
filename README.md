@@ -1,52 +1,70 @@
 # ZODRAN: Shadow Protocol
-
 **The city is compromised. Your move.**
 
-A playable, cinematic cyber-defence game demo with a neon crime-game atmosphere and a clean mission-oriented interface. This is an original fictional educational experience, not affiliated with Mortal Kombat, Grand Theft Auto, or HappyRobot.
+An original 3D, story-driven cybersecurity action game built in **Three.js**, designed for the browser. Explore the neon-lit streets of Solara City, collect Z-coins, uncover cybercrime, and grow your operator reputation.
 
-## Play
+**Playable demo:** https://vincentayorinde.github.io/zodran/
 
-Open `index.html` in a browser. No installation, dependency, build step, account, API key or backend is required.
+## What's playable (alpha v0.2)
 
-For local HTTP serving:
+- Fully rendered **3D city** with procedural buildings, neon signs, windows, atmospheric lighting, fog, streetlights and cinematic postprocessing on desktop
+- Third-person operator with animated movement, follow camera, walking and sprinting
+- **Keyboard controls:** WASD / arrow keys to move, Shift to sprint, E or Space to interact, Escape for menu
+- **Mobile touch controls:** Direction pad and interact button
+- Three floating signal-beacon mission stations, with sequential unlocks
+- **Three story cases and six choices:** Ghost Delivery (phishing), Silent Transfer (invoice fraud), Account Echo (account takeover)
+- Evidence inspection, decision consequences, explanations and mission scoring
+- **17 collectible Z-coins** with sound cues, XP, unlockable levels and ranks
+- Offline **leaderboard preview** with explicitly fictional rivals and the real player's locally saved score
+- Reward vault showing earned local credits and their non-cash status
+- Persistent callsign, mission best scores, collectibles, XP and credits via `localStorage`
+- Optional original synthesized UI sound effects
 
-```bash
+## Technology
+
+- Three.js **0.187.0** with pinned CDN ES-module import map
+- EffectComposer, UnrealBloomPass and OutputPass on desktop; standard renderer on mobile
+- Plain HTML, CSS and JavaScript; no React build step, bundler or framework lock-in
+- Procedurally generated 3D world; no external textures, paid assets or third-party music
+- Browser-local progression (no authentication, backend, database or payout processing)
+
+## Run locally
+
+This is a static website. A local HTTP server is recommended because the Three.js module is imported from a CDN.
+
+```sh
 python3 -m http.server 8000
 ```
 
-Then open http://localhost:8000.
+Open **http://localhost:8000**. The browser needs a WebGL-capable GPU and internet access for the pinned Three.js dependency.
 
-## Included gameplay
+## GitHub Pages deployment
 
-- Atmospheric fictional city with five mapped districts (one playable, four future expansions)
-- Operator callsign and browser-local progress
-- Three playable missions: Ghost Delivery, Silent Transfer, Account Echo
-- Six scored decisions with evidence inspection, explanations and consequences
-- Sequential mission unlocking, replayable cases, rank progression, XP and fictional Z-credits
-- Responsive layouts and reduced-motion support
-- Fictional offline leaderboard and a clearly labelled reward concept preview
+Repository → **Settings** → **Pages** → Source: **Deploy from a branch** → Branch: `main`, Folder: `/ (root)`.
 
-## Deploy with GitHub Pages
+Any merge or commit to `main` updates the static site. Clear cache/reload after deployment.
 
-1. Open **Settings → Pages** for this repository.
-2. Under **Build and deployment**, select **Deploy from a branch**.
-3. Choose `main` and `/ (root)`, then save.
-4. The demo will be at **https://vincentayorinde.github.io/zodran/** when Pages finishes publishing.
+## Code structure
 
-No secrets or GitHub Actions workflow are required.
+```text
+index.html              # DOM screen structure / pinned ESM imports
+styles.css              # Responsive cinematic game HUD and mission UI
+game.js                 # Three.js world, gameplay loop, missions, rewards
+.github/workflows/       # Basic validation on push
+README.md
+```
 
-## Safety and reward status
+The current code is a working **vertical slice**, not yet a production-scale persistent multiplayer world. A server-backed leaderboard would require authenticated profiles, server-authoritative mission scoring, request validation, abuse controls and a database. **Do not trust browser-local XP or coins for cash prizes.**
 
-All scenarios use synthetic incidents, inert .example domains and simulated accounts. Nothing in the game submits user data to a server or interacts with a real threat. Z-credits are fictional and cannot be cashed out. No sponsored tournament, real-money prize, payment, wager, or purchase is offered.
+## Safety and money
 
-## Local storage
+All cybersecurity scenarios are fictional and use inert `.example` domains. There are no attacks against real systems. Z-credits cannot be withdrawn, purchased, transferred or exchanged for cash. Fictional leaderboard rivals are labelled as such. There is no paid contest.
 
-The game uses `zodran_demo_v1`. If a player previously opened an earlier ZEKRAN prototype on the same origin, the demo can read the `zekran_demo_v1` save as a migration fallback. Neither key is sent to a server.
+## Roadmap
 
-## Brand
+1. Test 3D performance on browsers and devices; add quality presets, improve collision and cinematics.
+2. Build additional districts, character animations, richer dialogue and collectible cosmetics.
+3. Extract the scoring engine into server-validated APIs, then integrate Postgres with optional authentication.
+4. Add real leaderboard accounts, fraud controls, content moderation, and only then investigate sponsored competitions.
 
-ZODRAN is a provisional working brand, not a trademark clearance.
-
-## License
-
-No open-source license is granted at this stage. The prototype is intended for product evaluation.
+**Brand note:** ZODRAN is a provisional creative name pending trademark clearance.
