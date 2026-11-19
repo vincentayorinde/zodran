@@ -1,0 +1,19 @@
+name: Validate ZODRAN
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax
+        run: node --check game.js
+      - name: Static integration smoke checks
+        run: node scripts/smoke.mjs
